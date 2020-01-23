@@ -17,6 +17,7 @@
 
 package com.example.android.devbyteviewer.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -24,9 +25,11 @@ import androidx.room.Query
 
 @Dao
 interface VideoDao {
-    // TODO (01) Update getVideos() to return the List as a LiveData.
+    /**
+     * Returns a LiveData List so Room can operate on a background thread.
+     */
     @Query("select * from databasevideo")
-    fun getVideos(): List<DatabaseVideo>
+    fun getVideos(): LiveData<List<DatabaseVideo>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg videos: DatabaseVideo)
